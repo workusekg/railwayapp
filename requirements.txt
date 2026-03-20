@@ -2,6 +2,5 @@ streamlit
 pymupdf
 python-docx
 striprtf
-easyocr
 requests
 psycopg2-binary

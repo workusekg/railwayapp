@@ -1,10 +1,9 @@
 # 1. Use a much smaller base image
 FROM python:3.11-slim-bookworm
 
-# 2. Install only essential system tools (removed heavy extras)
+# 2. Install only essential system tools
 RUN apt-get update && apt-get install -y \
     curl \
-    libgl1 \
     && rm -rf /var/lib/apt/lists/*
 
 # 3. Install Ollama (this is only ~150MB)
@@ -15,7 +14,8 @@ WORKDIR /app
 
 # 4. Install Python dependencies first (leverages caching)
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt \
+    && rm -rf /root/.cache/pip
 
 # 5. Copy your app code last
 COPY . .
